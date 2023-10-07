@@ -7,18 +7,18 @@ import { useRoute } from '@react-navigation/native';
 
 
 
-const Dashboard = ({route}) => {
+const Dashboard = ({ route }) => {
   const user = route.params;
 
   const navigation = useNavigation();
 
 
   const handleAbrirChamado = () => {
-    navigation.navigate('Chamados');
+    navigation.navigate('Chamados', { email: user.user });
   };
 
   const handleHistorico = () => {
-    navigation.navigate('Historico');
+    navigation.navigate('Historico', { email: user.user });
   };
 
   const handleUsuarios = () => {
@@ -26,7 +26,7 @@ const Dashboard = ({route}) => {
   };
 
   useEffect(() => {
-   console.log(user.user)
+    console.log(user.user)
   }, []);
 
 
@@ -54,12 +54,14 @@ const Dashboard = ({route}) => {
       </View>
       <View style={styles.containerButton}>
 
-        <TouchableOpacity style={styles.button} onPress={handleUsuarios}>
-          <Icon name="group" size={70} color="black" style={{ marginLeft: 30 }} />
-          <Text style={styles.buttonText}>Usuários</Text>
-        </TouchableOpacity>
+        {user.user === 'useradm@gmail.com' && (
+          <TouchableOpacity style={styles.button} onPress={handleUsuarios}>
+            <Icon name="group" size={70} color="black" style={{ marginLeft: 30 }} />
+            <Text style={styles.buttonText}>Usuários</Text>
+          </TouchableOpacity>
+        )}
 
-        </View>
+      </View>
     </View>
   );
 };

@@ -7,6 +7,7 @@ import Chamados from './src/screens/Chamados/Chamados';
 import Historico from './src/screens/Historico/Historico';
 import Usuarios from './src/screens/Usuarios/Usuarios';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import EditarChamado from './src/screens/Historico/Editar/EditarChamado';
 
 const Stack = createNativeStackNavigator();
 const DashboardStack = createNativeStackNavigator();
@@ -18,6 +19,7 @@ const DashboardNavigator = () => {
       <DashboardStack.Screen name="Chamados"component={Chamados}options={{headerTitleStyle: {color: 'white',},headerTintColor: 'white',}}/>
       <DashboardStack.Screen name="Historico"component={Historico}options={{headerTitleStyle: {color: 'white',},headerTintColor: 'white',}}/>
       <DashboardStack.Screen name="Usuarios"component={Usuarios}options={{headerTitleStyle: {color: 'white',},headerTintColor: 'white',}}/>
+      <DashboardStack.Screen name="EditarChamado"component={EditarChamado}options={{headerTitleStyle: {color: 'white',},headerTintColor: 'white',}}/>
     </DashboardStack.Navigator>
   );
 };

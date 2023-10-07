@@ -4,19 +4,28 @@ import { firestore } from '../../config/Firebase' // Verifique a importação
 import { styles } from './styles'; // Importe o estilo
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
-const Historico = () => {
+const Historico = ({route}) => {
   const navigation = useNavigation();
   const [searchTerm, setSearchTerm] = useState('');
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const user = route.params;
+  const isFocused = useIsFocused();
 
   const fetchDataFromFirebase = async () => {
     setLoading(true);
+    if(user.email === 'useradm@gmail.com'){
     try {
       const usersRef = query(collection(firestore, 'historico'));
-      const resultado = await getDocs(usersRef); // Use firestore assim
-      const searchData = resultado.docs.map((doc) => doc.data());
+      const resultado = await getDocs(usersRef);
+      //const searchData = resultado.docs.map((doc) => doc.data());
+      const searchData = resultado.docs.map((doc) => ({
+        ...doc.data(),
+        docId: doc.id  // adiciona o ID do documento para cada item
+      }));
       
       setData(searchData);
     } catch (error) {
@@ -24,14 +33,32 @@ const Historico = () => {
     }finally {
       setLoading(false); 
     }
+  }else{
+    try {
+      const usersRef = query(collection(firestore, 'historico'),
+      where('user', '==', user.email));
+      const resultado = await getDocs(usersRef); // Use firestore assim
+      const searchData = resultado.docs.map((doc) => ({
+        ...doc.data(),
+        docId: doc.id  // adiciona o ID do documento para cada item
+      }));
+      
+      setData(searchData);
+    } catch (error) {
+      console.error('Erro ao buscar dados do Firebase:', error);
+    }finally {
+      setLoading(false); 
+    }
+  }
   };
+  
   const handleChamado = () => {
-    navigation.navigate('Chamados');
+    navigation.navigate('Chamados',{email: user.email});
   };
 
-  useEffect(() => {
-    fetchDataFromFirebase();
-  }, []);
+  const handleEditar= (docId) => {
+    navigation.navigate('EditarChamado',{ id: docId });
+  }
 
   const handleSearch = async () => {
     setLoading(true);
@@ -51,9 +78,19 @@ const Historico = () => {
       console.error('Erro ao buscar dados do Firebase:', error);
     }
     finally {
-      setLoading(false); // Define o estado de loading como false quando a busca é concluída (mesmo se houver erro)
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchDataFromFirebase();
+  }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      fetchDataFromFirebase();
+    }
+  }, [isFocused]);
 
   return (
     <>
@@ -76,10 +113,15 @@ const Historico = () => {
               data={data}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => (
-                <TouchableOpacity style={styles.itemContainer} onPress={() => {}}>
+                <TouchableOpacity style={styles.itemContainer} onPress={() => handleEditar(item.docId)}>
                   <View style={styles.itemFlat}>
                     <Text>{item.usuario}</Text>
                     <Text>{item.motivo}</Text>
+                    <Text>{item.observacao}</Text>
+                  </View>
+                  <View style={[styles.itemStatus, { backgroundColor: item.status === 'Aberto' ? '#FFD700' : 'white' }]}>
+
+                  <Text>{item.status}</Text>
                   </View>
                 </TouchableOpacity>
               )}

@@ -43,6 +43,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
     flexDirection: 'row',
+    justifyContent: 'space-between', // Alinhar os elementos ao espaço entre eles
     borderWidth: 0.5,
     borderColor: '#CCCCCC',
   },
@@ -50,6 +51,19 @@ export const styles = StyleSheet.create({
   itemFlat: {
     // Estilos específicos para centralizar o conteúdo dentro do itemContainer
   },
+
+  itemStatus:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight:20,
+    width:70,
+    height:40,
+    borderRadius:10,
+    borderWidth:0.5,
+    marginTop:15
+  },
+
   containerButton: {
     flexDirection: 'row',
     justifyContent: 'center',

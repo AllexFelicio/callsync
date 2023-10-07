@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     },
     label: {
       marginTop: 20,
-      fontSize: 16,
+      fontSize: 20,
       marginBottom: 5,
     },
     input: {
