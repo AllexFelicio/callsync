@@ -27,8 +27,8 @@ export const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     marginTop: 10,
-    flex: 1, // Isso permite que o TextInput ocupe o espaço restante
-    marginRight: 10, // Espaçamento à direita para separar do botão
+    flex: 1,
+    marginRight: 10,
   },
   line: {
     borderBottomWidth: 1,
@@ -37,19 +37,19 @@ export const styles = StyleSheet.create({
   },
   itemContainer: {
     backgroundColor: '#ffffff',
-    height: 90,
+    height: 120,
     width: '95%',
     padding: 10,
     marginBottom: 10,
     borderRadius: 10,
     flexDirection: 'row',
-    justifyContent: 'space-between', // Alinhar os elementos ao espaço entre eles
+    justifyContent: 'space-between',
     borderWidth: 0.5,
     borderColor: '#CCCCCC',
   },
 
-  itemFlat: {
-    // Estilos específicos para centralizar o conteúdo dentro do itemContainer
+  itemFlat:{
+    marginBottom: 50
   },
 
   itemStatus:{
@@ -58,12 +58,15 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight:20,
     width:70,
-    height:40,
+    height:25,
     borderRadius:10,
     borderWidth:0.5,
-    marginTop:15
+    marginTop:40,
   },
-
+  Titulo:{
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
   containerButton: {
     flexDirection: 'row',
     justifyContent: 'center',

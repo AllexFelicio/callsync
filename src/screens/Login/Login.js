@@ -34,8 +34,7 @@ const Login = () => {
         return;
       }
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log('redirecionando')
-      navigation.navigate('Dashboard', {screen:'DashboardMain', params:{teste: 'teste'}}); // Substitua 'NomeDaTela' pelo nome correto da sua próxima tela
+      navigation.navigate('Dashboard', {screen:'DashboardMain', params:{user: email}}); // Substitua 'NomeDaTela' pelo nome correto da sua próxima tela
     } catch (error) {
       console.log(error);
       setErrorAlert({ visible: true, message: 'Usuário ou Senha incorreto.' });

@@ -4,7 +4,7 @@ import { styles } from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Picker } from '@react-native-picker/picker';
 import { firestore } from '../../config/Firebase' // Verifique a importação
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 
@@ -35,7 +35,8 @@ const Chamados = ({route}) => {
             motivo: selecao,
             observacao: observacao,
             status: 'Aberto',
-            user: user.email
+            user: user.email,
+            dataHora: serverTimestamp()
         });
 
         console.log("Documento escrito com ID: ", docRef.id);

@@ -5,23 +5,24 @@ export const styles = StyleSheet.create({
         padding: 20,
     },
     label: {
-        marginTop: 20,
+        marginTop: 5,
         fontSize: 20,
-        marginBottom: 5,
+        marginBottom: 3,
+        fontWeight: 'bold'
     },
     input: {
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
         padding: 10,
-        marginBottom: 15,
-        fontSize: 16,
+        marginBottom: 8,
+        fontSize: 17,
     },
     picker: {
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
-        marginBottom: 15,
+        marginBottom: 5,
     },
     textarea: {
         borderWidth: 1,

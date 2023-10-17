@@ -6,6 +6,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native';
 import { useIsFocused } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
+import { format } from 'date-fns';
 
 const Historico = ({route}) => {
   const navigation = useNavigation();
@@ -24,9 +25,13 @@ const Historico = ({route}) => {
       //const searchData = resultado.docs.map((doc) => doc.data());
       const searchData = resultado.docs.map((doc) => ({
         ...doc.data(),
-        docId: doc.id  // adiciona o ID do documento para cada item
+        docId: doc.id 
       }));
-      
+
+      // Ordenar os dados com base no doc.id em ordem decrescente
+    searchData.sort((a, b) => {
+      return b.docId.localeCompare(a.docId);
+    });
       setData(searchData);
     } catch (error) {
       console.error('Erro ao buscar dados do Firebase:', error);
@@ -37,10 +42,10 @@ const Historico = ({route}) => {
     try {
       const usersRef = query(collection(firestore, 'historico'),
       where('user', '==', user.email));
-      const resultado = await getDocs(usersRef); // Use firestore assim
+      const resultado = await getDocs(usersRef);
       const searchData = resultado.docs.map((doc) => ({
         ...doc.data(),
-        docId: doc.id  // adiciona o ID do documento para cada item
+        docId: doc.id 
       }));
       
       setData(searchData);
@@ -57,7 +62,7 @@ const Historico = ({route}) => {
   };
 
   const handleEditar= (docId) => {
-    navigation.navigate('EditarChamado',{ id: docId });
+    navigation.navigate('EditarChamado',{ id: docId, email: user.email});
   }
 
   const handleSearch = async () => {
@@ -105,28 +110,29 @@ const Historico = ({route}) => {
           <Button title="Pesquisar" onPress={handleSearch} />
         </View>
         <View style={styles.line} />
-        {loading ? ( // Renderize o indicador de carregamento quando o estado de loading for true
+        {loading ? ( 
           <ActivityIndicator size="large" color="#27B1DC" />
         ) : (
           <View style={styles.container}>
-            <FlatList
+          <FlatList
               data={data}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => (
-                <TouchableOpacity style={styles.itemContainer} onPress={() => handleEditar(item.docId)}>
+              <TouchableOpacity style={styles.itemContainer} onPress={() => handleEditar(item.docId)}>
                   <View style={styles.itemFlat}>
-                    <Text>{item.usuario}</Text>
-                    <Text>{item.motivo}</Text>
-                    <Text>{item.observacao}</Text>
+                      <Text style={styles.Titulo}>{item.usuario}</Text>
+                      <Text>Motivo: {item.motivo}</Text>
+                      <Text>Obs: {item.observacao}</Text>
+                      <Text>Data: {format(item.dataHora.toDate(), "dd/MM/yyyy HH:mm")}</Text>
+                      {item.solucao ? <Text>Solução: {item.solucao}</Text> : null}
                   </View>
-                  <View style={[styles.itemStatus, { backgroundColor: item.status === 'Aberto' ? '#FFD700' : 'white' }]}>
-
-                  <Text>{item.status}</Text>
+                  <View style={[styles.itemStatus, { backgroundColor: item.status === 'Aberto' ? '#F2CC0D' : '#02BA26' }]}>
+                      <Text>{item.status}</Text>
                   </View>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
+              </TouchableOpacity>
+        )}
+    />
+</View>
         )}
       </View>
       <View style={styles.containerButton}>

@@ -2,51 +2,89 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 17,
+    maxHeight: 550,
+    marginBottom: 20,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderColor: '#cccccc',
+  },
+  input: {
+    backgroundColor: '#F5F5F5',
+    height: 30,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#CCCCCC',
+    padding: 10,
+    marginBottom: 10,
+    marginTop: 10,
+    flex: 1,
+    marginRight: 10,
+  },
+  line: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCCCCC',
+    marginVertical: 10,
+  },
+  itemContainer: {
+    backgroundColor: '#ffffff',
+    height: 90,
+    width: '95%',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderWidth: 0.5,
+    borderColor: '#CCCCCC',
+  },
+  itemStatus:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight:20,
+    width:70,
+    height:25,
+    borderRadius:10,
+    borderWidth:0.5,
+    marginTop:40,
+  },
+  Titulo:{
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  containerButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  roundedButton: {
+    backgroundColor: '#27B1DC',
+    borderRadius: 5,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    width: '90%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  rectangle: {
-    width: '100%',
-    height: 100,
-    backgroundColor: '#ffffff',
-    borderRadius: 20,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginTop: 10,
-    flexDirection: 'row'
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-
-  containerButton: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-
-  button: {
-    backgroundColor: 'white',
-    width: 165,
-    height: 140,
-    borderRadius: 20, // Ajuste o valor do raio para a borda arredondada desejada
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginTop: 20,
-    justifyContent: 'center'
-  },
-  buttonText: {
-    color: 'black', // Cor do texto dentro do botão
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  loadingContainer: {
-flex: 1,
-alignItems:'flex-start'
-  },
-  // iconContainer: {
-  //   marginLeft: 23, // Espaço entre o ícone e o texto
-  // },
 });
+
+export default styles;

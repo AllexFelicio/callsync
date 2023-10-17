@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, FlatList, Text, TouchableOpacity, ScrollView,ActivityIndicator } from 'react-native';
 import { firestore } from '../../config/Firebase' // Verifique a importação
-import styles from '../Historico/styles';
+import styles from './Styles';
 import { collection, getDocs, query, where } from 'firebase/firestore'
 
 const Usuarios = () => {
@@ -73,8 +73,9 @@ const Usuarios = () => {
               renderItem={({ item }) => (
                 <TouchableOpacity style={styles.itemContainer} onPress={() => {}}>
                   <View style={styles.itemFlat}>
-                    <Text>{item.nome}</Text>
-                    <Text>{item.email}</Text>
+                    <Text Text style={styles.Titulo}>{item.nome}</Text>
+                    <Text>Setor: {item.setor}</Text>
+                    <Text>Email: {item.email}</Text>
                   </View>
                 </TouchableOpacity>
               )}
@@ -82,11 +83,6 @@ const Usuarios = () => {
           </View>
         )}
       </View>
-      {/* <View style={styles.containerButton}>
-        <TouchableOpacity style={styles.roundedButton}>
-          <Text style={styles.buttonText}>Novo Chamado</Text>
-        </TouchableOpacity>
-      </View> */}
     </>
   );
 };

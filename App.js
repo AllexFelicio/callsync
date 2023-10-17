@@ -19,7 +19,7 @@ const DashboardNavigator = () => {
       <DashboardStack.Screen name="Chamados"component={Chamados}options={{headerTitleStyle: {color: 'white',},headerTintColor: 'white',}}/>
       <DashboardStack.Screen name="Historico"component={Historico}options={{headerTitleStyle: {color: 'white',},headerTintColor: 'white',}}/>
       <DashboardStack.Screen name="Usuarios"component={Usuarios}options={{headerTitleStyle: {color: 'white',},headerTintColor: 'white',}}/>
-      <DashboardStack.Screen name="EditarChamado"component={EditarChamado}options={{headerTitleStyle: {color: 'white',},headerTintColor: 'white',}}/>
+      <DashboardStack.Screen name="EditarChamado"component={EditarChamado}options={{headerTitleStyle: {color: 'white',},headerTintColor: 'white',headerTitle: 'Editar Chamado'}}/>
     </DashboardStack.Navigator>
   );
 };

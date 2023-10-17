@@ -16,6 +16,10 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: 'row'
   },
+  containerSeq: {
+    flex: 1,
+    justifyContent: 'column',
+  },
   text: {
     fontSize: 20,
     fontWeight: 'bold',

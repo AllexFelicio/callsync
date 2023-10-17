@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { Picker } from '@react-native-picker/picker';
 import { firestore } from '../../../config/Firebase' // Verifique a importação
-import { addDoc, collection } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 
 
@@ -15,46 +13,52 @@ const EditarChamado = ({ route }) => {
     const [selecao, setSelecao] = useState('');
     const [observacao, setObservacao] = useState('');
     const [radioValue, setRadioValue] = useState('');
+    const [solucao, setSolucao] =  useState('');
 
     const navigation = useNavigation();
     const chamado = route.params;
 
     const fetchChamadoData = async () => {
+
         const chamadoDoc = doc(firestore, 'historico', chamado.id);
         const chamadoData = await getDoc(chamadoDoc);
 
         if (chamadoData.exists()) {
-            const { usuario, motivo, observacao } = chamadoData.data();
+            const { usuario, motivo, observacao, status, solucao } = chamadoData.data();
             setNome(usuario);
             setSelecao(motivo);
             setObservacao(observacao);
+            setRadioValue(status);
+            setSolucao(solucao);
         } else {
             console.log("No such document!");
         }
     };
 
-    const handleEnviar = async () => {
+    const handleSalvar = async () => {
         try {
-            // Criar um novo documento na coleção "historico"
-            const docRef = await addDoc(collection(firestore, 'historico'), {
+            const chamadoDoc = doc(firestore, 'historico', chamado.id);
+    
+            await updateDoc(chamadoDoc, {
                 usuario: nome,
                 motivo: selecao,
                 observacao: observacao,
-                status: 'Aberto'
+                status: radioValue,
+                solucao: solucao
             });
-
-            console.log("Documento escrito com ID: ", docRef.id);
+    
+            //console.log("Documento atualizado com sucesso!");
             navigation.goBack();
         } catch (e) {
-            console.error("Erro adicionando documento: ", e)
+            console.error("Erro ao atualizar o documento: ", e);
         }
     };
 
     useEffect(() => {
-        console.log(chamado.id)
+        console.log(selecao)
+        console.log(chamado.email)
         fetchChamadoData();
     }, []);
-
 
     return (
         <View style={styles.container}>
@@ -68,16 +72,13 @@ const EditarChamado = ({ route }) => {
             />
 
             <Text style={styles.label}>Tipo de chamado:</Text>
-            <View pointerEvents="none">
-                <Picker
-                    style={styles.picker}
-                    selectedValue={selecao}
-                >
-                    <Picker.Item label="Suporte" value="Suporte" />
-                    <Picker.Item label="Infraestrutura" value="Infraestrutura" />
-                    <Picker.Item label="Equipamento" value="Equipamento" />
-                </Picker>
-            </View>
+            <TextInput
+                style={styles.input}
+                placeholder="Tipo de Chamado"
+                value={selecao}
+                onChangeText={setSelecao}
+                editable={false}
+            />
 
             <Text style={styles.label}>Observação:</Text>
             <TextInput
@@ -89,7 +90,18 @@ const EditarChamado = ({ route }) => {
                 onChangeText={setObservacao}
                 editable={false}
             />
-            <Text style={styles.label}>Status:</Text>
+            {chamado.email === 'useradm@gmail.com' && (
+                <>
+                <View>
+                    <Text style={styles.label}>Solução:</Text>
+                    <TextInput
+                        style={styles.textarea} // Estilo para a entrada de solução
+                        placeholder="Digite a solução"
+                        value={solucao}
+                        onChangeText={setSolucao}
+                    />
+                </View>
+                <Text style={styles.label}>Status:</Text>
             <View style={styles.radioGroup}>
                 <View style={styles.radioButtonContainer}>
                     <TouchableOpacity
@@ -120,8 +132,10 @@ const EditarChamado = ({ route }) => {
                     </TouchableOpacity>
                     <Text style={styles.radioText}>Resolvido</Text>
                 </View>
-            </View>
-            <TouchableOpacity style={styles.button} onPress={handleEnviar}>
+                </View>
+                </>
+            )}
+            <TouchableOpacity style={styles.button} onPress={handleSalvar}>
                 <Text style={styles.buttonText}>Salvar</Text>
             </TouchableOpacity>
         </View>
